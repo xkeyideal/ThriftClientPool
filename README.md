@@ -12,6 +12,7 @@ Use beego's httplib library write the http client [Beego/httplib](https://github
 ## Hierarchy
 
 src/
+
     client/
 
         contains the http/rpc client code and client test code
@@ -58,7 +59,7 @@ BenchmarkHttpHello              |   2000    | 859478
 
 1. Pool code
     ```go
-    thriftPool.thrift_pool.go
+    thriftPool/thrift_pool.go
     ```
 
 2. server code & start:
