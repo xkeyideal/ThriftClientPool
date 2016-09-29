@@ -9,6 +9,34 @@ Use gin framework write the http server [Gin](https://github.com/gin-gonic/gin)
 Use beego's httplib library write the http client [Beego/httplib](https://github.com/astaxie/beego/tree/master/httplib)
 
 
+## Hierarchy
+
+src/
+    client/
+
+        contains the http/rpc client code and client test code
+
+    server/
+
+        contains the http/rpc server code
+
+    thriftPool/
+
+        contains the Thrift Client Connection Pool code
+
+    tutoral/
+
+        contains the Thrift Gen golang service code by idl file
+
+    tutoral.thrift
+
+        the idl file
+
+    main.go
+
+        the server start code
+
+
 ## Benchmarks
 
 Pool VS Single VS Http
@@ -37,7 +65,7 @@ BenchmarkHttpHello              |   2000    | 859478
 
     ```go
     server/rpcserver.go
-    server/httpclient.go
+    server/httpserver.go
 
     main.go
     ```
@@ -114,7 +142,7 @@ func RpcHelloTest() (msg string, err error) {
         go test -test.bench=".*"
     ```
 
-## Summary
+## Other
 
 The ThriftPool supports many servers, please see the thrift_pool.go
 
