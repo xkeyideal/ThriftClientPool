@@ -8,6 +8,9 @@ Use gin framework write the http server [Gin](https://github.com/gin-gonic/gin)
 
 Use beego's httplib library write the http client [Beego/httplib](https://github.com/astaxie/beego/tree/master/httplib)
 
+## Install
+
+go get github.com/xkeyideal/ThriftClientPool/thriftPool
 
 ## Hierarchy
 

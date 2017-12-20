@@ -94,13 +94,17 @@ func (p *ThriftPool) Get() (*IdleClient, error) {
 		client, err := dial(p.ip, p.port, p.connTimeout)
 		if err != nil {
 			p.lock.Lock()
-			p.count -= 1
+			if p.count > 0 {
+				p.count -= 1
+			}
 			p.lock.Unlock()
 			return nil, err
 		}
 		if !client.Check() {
 			p.lock.Lock()
-			p.count -= 1
+			if p.count > 0 {
+				p.count -= 1
+			}
 			p.lock.Unlock()
 			return nil, ErrSocketDisconnect
 		}
@@ -113,7 +117,9 @@ func (p *ThriftPool) Get() (*IdleClient, error) {
 
 		if !idlec.c.Check() {
 			p.lock.Lock()
-			p.count -= 1
+			if p.count > 0 {
+				p.count -= 1
+			}
 			p.lock.Unlock()
 			return nil, ErrSocketDisconnect
 		}
@@ -129,25 +135,29 @@ func (p *ThriftPool) Put(client *IdleClient) error {
 	p.lock.Lock()
 	if p.closed {
 		p.lock.Unlock()
-		
+
 		err := p.Close(client)
 		client = nil
 		return err
 	}
 
 	if p.count > p.maxConn {
-		p.count -= 1
+		if p.count > 0 {
+			p.count -= 1
+		}
 		p.lock.Unlock()
-		
+
 		err := p.Close(client)
 		client = nil
 		return err
 	}
 
 	if !client.Check() {
-		p.count -= 1
+		if p.count > 0 {
+			p.count -= 1
+		}
 		p.lock.Unlock()
-		
+
 		err := p.Close(client)
 		client = nil
 		return err
@@ -158,6 +168,7 @@ func (p *ThriftPool) Put(client *IdleClient) error {
 		t: nowFunc(),
 	})
 	p.lock.Unlock()
+
 	return nil
 }
 
@@ -167,7 +178,9 @@ func (p *ThriftPool) CloseErrConn(client *IdleClient) {
 	}
 
 	p.lock.Lock()
-	p.count -= 1
+	if p.count > 0 {
+		p.count -= 1
+	}
 	p.lock.Unlock()
 
 	p.Close(client)
@@ -192,7 +205,9 @@ func (p *ThriftPool) CheckTimeout() {
 		p.lock.Unlock()
 		p.Close(v.c) //close client connection
 		p.lock.Lock()
-		p.count -= 1
+		if p.count > 0 {
+			p.count -= 1
+		}
 	}
 	p.lock.Unlock()
 
@@ -238,7 +253,7 @@ func (p *ThriftPool) Release() {
 	idle := p.idle
 	p.idle.Init()
 	p.closed = true
-	p.count -= uint32(idle.Len())
+	p.count = 0
 	p.lock.Unlock()
 
 	for iter := idle.Front(); iter != nil; iter = iter.Next() {

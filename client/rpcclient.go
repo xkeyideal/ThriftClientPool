@@ -2,9 +2,10 @@ package client
 
 import (
 	"fmt"
-	"thriftPool"
 	"time"
-	"tutorial"
+
+	"github.com/xkeyideal/ThriftClientPool/thriftPool"
+	"github.com/xkeyideal/ThriftClientPool/tutorial"
 
 	"git.apache.org/thrift.git/lib/go/thrift"
 )

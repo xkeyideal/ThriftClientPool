@@ -6,9 +6,8 @@ import (
 	"os"
 	"time"
 
-	"tutorial"
-
 	"git.apache.org/thrift.git/lib/go/thrift"
+	"github.com/xkeyideal/ThriftClientPool/tutorial"
 )
 
 const (

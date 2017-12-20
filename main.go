@@ -1,12 +1,13 @@
 package main
 
 import (
-	"client"
 	"os"
 	"os/signal"
-	"server"
 	"syscall"
-	"thriftPool"
+
+	"github.com/xkeyideal/ThriftClientPool/client"
+	"github.com/xkeyideal/ThriftClientPool/server"
+	"github.com/xkeyideal/ThriftClientPool/thriftPool"
 )
 
 func mainServer() {
