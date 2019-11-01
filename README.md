@@ -1,5 +1,7 @@
 #Thrift Pool & Demo
 
+connection-pool 部分代码有bug，请参考[thrift-connection-pool](https://github.com/xkeyideal/grpcvsthrift/blob/master/thrift/client/pool/pool.go)实现
+
 ## Introduction
 
 Thrift version is 0.9.3 [Thrift](https://github.com/apache/thrift)
